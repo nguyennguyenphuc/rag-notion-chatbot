@@ -5,15 +5,22 @@ import sys
 from pathlib import Path
 from datetime import datetime
 import logging
-
-# Add project root to path
+from dotenv import load_dotenv
+from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
-
+script_dir = Path(__file__).parent.parent
+env_path = script_dir / '.env'
+load_dotenv(env_path, override=True)
 from config.settings import (
     APP_CONFIG, EMBEDDING_MODEL_NAME, LLM_MODEL_NAME, 
     NOTION_API_KEY, NOTION_PAGE_ID, VECTOR_DB_PATH,
     COLLECTION_NAME, CHUNK_CONFIG, LLM_CONFIG, QUANTIZATION_CONFIG
 )
+# Add project root to path
+sys.path.append(str(Path(__file__).parent.parent))
+
+
+
 from src.models.embeddings import EmbeddingsModel
 from src.models.llm import LanguageModel
 from src.data.notion_loader import NotionLoader
@@ -69,7 +76,7 @@ def refresh_notion_data():
             raise ValueError("Notion API key hoặc Database ID chưa được cấu hình trong file .env")
         
         # Load data from Notion
-        notion_loader = NotionPageLoader(NOTION_API_KEY, NOTION_PAGE_ID)
+        notion_loader = NotionLoader(NOTION_API_KEY, NOTION_PAGE_ID)
         documents = notion_loader.load_documents()
         
         if not documents:

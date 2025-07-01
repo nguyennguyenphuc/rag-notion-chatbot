@@ -1,25 +1,15 @@
-import os
+
 from dotenv import load_dotenv
+from pathlib import Path
 
-# Load .env
-load_dotenv()
+script_dir = Path(__file__).parent.absolute()
+env_path = script_dir / '.env'
+load_dotenv(env_path, override=True)
 
-# Print để debug
-api_key = os.getenv("NOTION_API_KEY")
-db_id = os.getenv("NOTION_DATABASE_ID")
+from config.settings import (
+    APP_CONFIG, EMBEDDING_MODEL_NAME, LLM_MODEL_NAME, 
+    NOTION_API_KEY, NOTION_PAGE_ID, VECTOR_DB_PATH,
+    COLLECTION_NAME, CHUNK_CONFIG, LLM_CONFIG, QUANTIZATION_CONFIG
+)
 
-print(f"API Key loaded: {api_key is not None}")
-print(f"API Key length: {len(api_key) if api_key else 0}")
-print(f"API Key prefix: {api_key[:10] if api_key else 'None'}")
-print(f"Database ID: {db_id}")
-
-# Test trực tiếp
-from notion_client import Client
-
-try:
-    client = Client(auth=api_key)
-    # Test với một API call đơn giản
-    user = client.users.me()
-    print(f"✅ Connected as: {user}")
-except Exception as e:
-    print(f"❌ Error: {e}")
+print(NOTION_PAGE_ID)
