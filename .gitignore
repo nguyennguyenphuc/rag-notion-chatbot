@@ -35,7 +35,6 @@ env/
 *~
 
 # Environment variables
-.env
 .env.local
 .env.*.local
 
@@ -53,13 +52,9 @@ logs/
 
 # Model cache
 .cache/
-models/
 
 # Data
-data/
-*.pdf
-*.csv
-*.xlsx
+
 
 # Streamlit
 .streamlit/
